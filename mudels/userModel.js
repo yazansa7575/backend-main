@@ -37,7 +37,7 @@ const userSchema =  mongoose.Schema({
         }
     },
     bio: {
-        type: String
+        type: String,
     }
 }, { timestamps: true });
 
@@ -48,6 +48,14 @@ function validationRegister(obj) {
         username: joi.string().trim().required(),
         email: joi.string().trim().required(),
         password: joi.string().trim().required()
+    });
+    return schema.validate(obj);
+}
+function validationPut(obj) {
+    const schema = joi.object({
+        username: joi.string().trim(),
+        password: joi.string().trim(),
+        bio: joi.string().trim()
     });
     return schema.validate(obj);
 }
@@ -62,5 +70,6 @@ function validationLogin(obj) {
 module.exports = {
     userModel,
     validationRegister,
-    validationLogin
+    validationLogin,
+    validationPut
 };

@@ -46,12 +46,12 @@ router.post(
     }
 
     let token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.secretkey)
-    res.status(200).json({ 
-      id : user.id,
-      isAdmin : user.isAdmin,
-      profilePhoto : user.profilePhoto,
+    res.status(200).json({
+      id: user.id,
+      isAdmin: user.isAdmin,
+      profilePhoto: user.profilePhoto,
       token
-     }); // تصحيح في رسالة النجاح
+    }); // تصحيح في رسالة النجاح
   })
 );
 module.exports = router; // تصحيح في تصدير الراوتر

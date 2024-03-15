@@ -10,14 +10,14 @@ app.use(express.json())
 
 // routs__________
 
-app.use("/userAuth",require("./routs/userRout/userAuth"))
-app.use("/usermethod",require("./routs/usermethod"))
+app.use("/userAuth", require("./routs/userRout/userAuth"))
+app.use("/usermethod", require("./routs/userRout/usermethod"))
 
 
 
-port = process.env.port || 3000
-app.listen(port,()=>{
-    console.log("iam listen");
+let port = process.env.port || 3000
+app.listen(port, () => {
+    console.log("i am listen");
 })
 
 

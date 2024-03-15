@@ -2,11 +2,13 @@ let jwt = require("jsonwebtoken")
 
 
 function verfiyToken(req, res, next) {
-    let authtoken = req.header.authorization
+    let authtoken = req.headers.authorization
+    console.log("authtoken");
+    console.log(authtoken);
     if (authtoken) {
-        let token = authtoken.spilt(" ")[1] 
+        let token = authtoken.split(" ")[1]
         try {
-            req.user =  jwt.verify(token, process.env.secretkey)
+            req.user = jwt.verify(token, process.env.secretkey)
             next()
         } catch (error) {
             return res.status(401).json({ message: "Invalid token" })
@@ -14,6 +16,17 @@ function verfiyToken(req, res, next) {
     } else {
         return res.status(401).json({ message: "no token provaid " })
     }
+}
+async function verfiyTokenandHimSelf(req, res, next) {
+    verfiyToken(req, res, () => {
+        if (req.user.id == req.params.id) {
+            next()
+        } else {
+            return res.status(401).json({ message: "you not the user" })
+        }
+
+    })
+
 }
 async function verfiyTokenandAdmin(req, res, next) {
     verfiyToken(req, res, () => {
@@ -26,4 +39,4 @@ async function verfiyTokenandAdmin(req, res, next) {
     })
 
 }
-module.exports = verfiyTokenandAdmin
+module.exports = {verfiyTokenandAdmin,verfiyTokenandHimSelf}
